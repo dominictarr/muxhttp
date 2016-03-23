@@ -34,7 +34,12 @@ module.exports = function (manifest, api) {
     if(!call) throw new Error('not implemented')
 
     function cb (err, value) {
-      if(isBuffer(value) || isString(value)) {
+      if(err) {
+        res.writeHead(500)
+        res.end(err.stack)
+    
+      }
+      else if(isBuffer(value) || isString(value)) {
         res.setHeader('Content-Type', 'text/plain')
         res.end(value)
       }
@@ -66,4 +71,5 @@ module.exports = function (manifest, api) {
 
   })
 }
+
 
